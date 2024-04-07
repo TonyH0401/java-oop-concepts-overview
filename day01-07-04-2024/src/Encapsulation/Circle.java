@@ -6,7 +6,17 @@ package Encapsulation;
 
 public class Circle {
     /* This is how you declare a constant by using final and static */
-    /* "final" keyword */
+    /*
+     * "final" keyword based on this link
+     * https://www.w3schools.com/java/ref_keyword_final.asp, it works by preventing
+     * being changed and inherited, it is treated like a constant.
+     */
+    /*
+     * "static" keyword based on this link
+     * https://www.geeksforgeeks.org/static-keyword-java/ is instead of creating an
+     * instance everytime being initiated, it is a class level variable, there is
+     * only 1 instance no matter how many time it's initialized.
+     */
     public final static double PI = Math.PI;
     /*
      * There are these access identifier:
@@ -54,13 +64,17 @@ public class Circle {
     }
 
     public int compareTo(Object obj) {
-        if(!(obj instanceof Circle)) {
-            System.out.println("");
+        if (!(obj instanceof Circle)) {
+            System.out.println("> Object is not correct for comparision!");
             return -1;
         }
-        if(obj)
-
-        return 1;
+        Circle circle = (Circle) obj;
+        if (getArea() < circle.getArea()) {
+            return -1;
+        } else if (getArea() > circle.getArea()) {
+            return 1;
+        }
+        return 0;
     }
 
     public boolean equals(Object obj) {

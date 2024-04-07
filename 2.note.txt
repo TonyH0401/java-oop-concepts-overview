@@ -4,8 +4,8 @@ https://www.geeksforgeeks.org/super-keyword/
 https://www.educative.io/answers/how-to-declare-constants-in-java
 https://www.w3schools.com/java/ref_keyword_final.asp
 
-
-
 composition
 agregation
 association
+
+nested class
