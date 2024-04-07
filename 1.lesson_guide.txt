@@ -1,0 +1,497 @@
+####################### Where are the sources? ############################
+- Get the code from Macbook Air
+- Get the code from Dell Vostro
+- Get the code from TeraBox, there is nothing in TeraBox
+- Get the code from NTU website
+- Get the code from Facebook Group Lesson
+###########################################################################
+
+####################### Facebook Group Lessons ############################
+--- Lesson 1:
+-- UML Class Diagram:
+- https://www.uml-diagrams.org/class-diagrams-overview.html
+-- Java Input Scanner:
+- https://www.w3schools.com/java/java_user_input.asp
+-- Java Input Scanner:
+- https://beginnersbook.com/2017/09/java-program-to-read-integer-value-from-the-standard-input/
+-- Slides:
+- https://drive.google.com/drive/folders/1qwCkjdYB9k7CCBjxTzgtzEtCoxNnSlgt
+-- Problem with multiple Scanner + "No Line Found" Error:
+- https://coderanch.com/t/707428/java/Scanner-Line-doesn-write-console
+
+--- Lesson 2:
+-- BufferReader & PrintReader: 
+package BufferReader.PrintReader;
+import java.io.*;
+class TextProcessor
+{
+    private FileWriter fw;
+    private PrintWriter pw;
+    private File textFile;
+    private FileReader fr;
+    private BufferedReader br;
+    private String[] books = {"Rhetorica by Aristotle",
+                              "Against Apion by Josephus",
+                              "4QMMT author unknown",
+                              "Peloponesian War by Thucydides"} ;
+    // Declare a String array of book titles from antiquity
+    public TextProcessor()
+    {
+        //Do file initialization in the constructor
+        try
+        {
+            textFile = new File("AncientTexts.txt");
+            // Define a new file
+            fw = new FileWriter(textFile);
+            // Connect the file to a FileWriter object for output
+            pw = new PrintWriter(fw);
+            // Wrap the FileWriter in a PrintWriter so you can write output
+            // by lines, not characters
+        }
+        catch(IOException e)
+        {
+            // There are many reasons this might fail, like the
+            // write-protect tab on a diskette being set to
+            // write-protect the disktte.
+            System.out.println("Cannot create file because of "  + e.toString());
+        }
+    }
+    public void writeOutput()
+    {
+        for (int i=0; i < books.length; i++)
+        {
+            // Step through the array, and write each
+            // element to the file a s "line".
+            pw.println(books[i]);
+        }
+        pw.flush();
+        // Force everything from the buffer to the physical file.
+        pw.close();
+        // Close the writer.
+    }
+    public void readInput()
+    {
+        try
+        {
+            // Read the file into memory, one "line" at a time.
+            // For this to work, the data in the file must be
+            // organized as "lines" with carriage returns.
+            fr = new FileReader(textFile);
+            br = new BufferedReader(fr);
+            // Open the file with a FileReader and wrap the
+            // character-oriented reader in a line-oriented reader.
+            for(int i =0; i < books.length; i++)
+            {
+                String line = br.readLine();
+                // Read a line and print it.
+                System.out.println(line);
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("Read failed because of " + e.toString());
+        }
+    }
+} // End class definition TextProcessor.
+-------------------------------------------------------------------------
+package BufferReader.PrintReader;
+public class Main {
+    public static void main(String args[])
+    {
+        TextProcessor textP = new TextProcessor();
+        textP.writeOutput();
+        textP.readInput();
+        System.exit(0);
+    }    
+}
+-- DataInputStream & DataOutputStream:
+package DataInputStream.DataOutputStream;
+import java.io.*;
+// Java Primitive-oriented I/O with DataInputStream and DataOutputStream
+public class PrimitiveProcessor {
+    DataInputStream dis;
+    DataOutputStream dos;
+    // Data for output.
+    int outDay1 = 5;
+    float outTemp1 = 75.5F;
+    String cityName1 = "Milpitas";
+    float outTemp2 = 120.2F;
+    String cityname2 = "Chicago";
+    // Data for input.
+    int inDayNum = 0;
+    float inTemp1 = 0.0f;
+    float inTemp2 = 0.0f;
+    String inCity1 = null;
+    String inCity2 = null;
+    String fileName = "Primitives.txt";
+    FileOutputStream fos;
+    public PrimitiveProcessor()
+    {
+        try
+        {
+            fos = new FileOutputStream(fileName);
+            dos = new DataOutputStream(fos);
+            // You need an OutputStream for the constructor, so
+            // wrap a FileOutputStream in a DataOutputStream.
+        }
+        catch(IOException ioe)
+        {
+             System.out.println("File " + fileName + "error" + ioe.getMessage());
+        }
+    }
+    public boolean writeTemperatureInfo()
+    {
+        try
+        {
+            dos.writeInt(outDay1);
+            dos.writeFloat(outTemp1);
+            dos.writeUTF(cityName1);
+            dos.writeFloat(outTemp2);
+            dos.writeUTF(cityname2);
+            // There are specific write methods for every
+            // Java primitive data type.
+            dos.flush();
+            dos.close();
+            dos = null;
+            // Flush the stream to force the data to disk.
+            // Close the DataOutputStream so the file can be read.
+            // Then set the object reference to null to
+            // encourage garbage collection.
+        }
+        catch(IOException e)
+        {
+            // Deal with any I/O-related errors
+            // Almost all the methods of classes in java.io throw
+            // exceptions
+            System.out.println("Error writing file:  " + e.getMessage());
+        }
+        return true;
+    }
+    public boolean readTemperatureInfo()
+    {
+        try
+        {
+            FileInputStream fis = new FileInputStream(fileName);
+            dis = new DataInputStream(fis);
+            // "Wrap" the FileInputStream in a DataInputStream to
+            // process data at a higher level of abstraction.
+            // The DataInputStream constructor requires this.
+            // Create a DataInputStream object on the file.
+            // The physical file needs to exist when you do this.
+            inDayNum = dis.readInt();
+            inTemp1 = dis.readFloat();
+            inCity1 = dis.readUTF();
+            inTemp2 = dis.readFloat();
+            inCity2 = dis.readUTF();
+            // Instead of having to read a certain
+            // number of bytes manually to assume
+            // int or float, you can simply read a whole
+            // primitive, and Java will
+            // extract the correct number of bytes from the file.
+            // Note that you must extract or read the data types
+            // in the same order you wrote them. If you write
+            // a float and a char,
+            // in that order, you must not do readChar() followed by
+            // readInt() if you want
+            // correct results.
+            System.out.println("On day " + inDayNum + ", while it was");
+            System.out.println("a pleasant " + inTemp1 + " in " + inCity1);
+            System.out.println("it was a nasty hot and muggy " + inTemp2);
+            System.out.println("in " + inCity2);
+        }
+        catch(IOException ioe)
+        {
+            System.out.println("Error reading file:  " + ioe.getMessage());
+        }
+        return true;
+    }
+    // End class definition PrimitiveProcessor    
+}
+--------------------------------------------------------------
+package DataInputStream.DataOutputStream;
+public class Main {
+    public static void main(String[] args)
+    {
+        PrimitiveProcessor pProcessor = new PrimitiveProcessor();
+        pProcessor.writeTemperatureInfo();
+        pProcessor.readTemperatureInfo();
+        System.exit(0);
+    }    
+}
+-- Books, link is not accessable:
+- https://github.com/dangnt/books.git
+-- Enrollment, link is not accessable:
+- https://github.com/dangnt/enrollment.git
+-- Stundet Class:
+// Student.java
+public class Student{
+    private String id;
+    private String name;
+    public Student(){}
+    public Student(String id, String name){
+        this.id = id;
+        this.name = name;
+    }
+    // getter
+    public String getid(){
+        return id;
+    }
+    // getter
+    public String getname(){
+        return name;
+    }
+    //setter
+    public void setid(String id){
+        this.id = id;
+    }
+    // setter
+    public void setname(String name){
+        this.name = name;
+    }
+}
+// App.java
+public class App {
+    public static void main(String[] args){
+        Student s[] = new Student[10];
+        s[0] = new Student("01", "Peter");
+        System.out.println(s[0].getid() + "\t" + s[0].getname());
+    }
+}
+-- Student & Course Class:
+package enrollment;
+public class Student {
+    String studentID;
+    String studentName;
+    Student(){
+        studentID = "";
+        studentName = "";
+    }
+    void set_Student (String studentID, String studentName){
+        this.studentID = studentID;
+        this.studentName = studentName;
+    }
+    void set_studentID (String studentID){
+        this.studentID = studentID;
+    }
+    String get_studentID (){
+        return studentID;
+    }
+    void set_studentName (String studentName){
+        this.studentName = studentName;
+    }
+    String get_studentName (){
+        return studentName;
+    }
+    void print_Student (){
+        System.out.println(studentID + "\t" + studentName);
+    }
+    void enroll_course (Course c) {
+        if (c.nStudents < 40){
+            c.studentList[c.nStudents++] = this;
+        }
+    }
+}
+--------------------------------------------------------------
+package enrollment;
+public class Course {
+    String courseID;
+    String courseName;
+    Student[] studentList = new Student[40];
+    int nStudents;
+    Course(){
+        courseID = "";
+        courseName = "";
+        nStudents = 0;
+        for (int i = 0; i < studentList.length; i++)
+            studentList[i] = new Student();
+    }
+    void set_Course (String courseID, String courseName){
+        this.courseID = courseID;
+        this.courseName = courseName;
+    }
+    void set_courseID (String courseID){
+        this.courseID = courseID;
+    }
+    String get_courseID (){
+        return courseID;
+    }
+    void set_courseName (String courseName){
+        this.courseName = courseName;
+    }
+    String get_courseName (){
+        return courseName;
+    }
+    void set_studentCounter (int n){
+        this.nStudents = n;
+    }
+    void print_Course (){
+        System.out.println(courseID + "\t" + courseName);
+        for (int i = 0; i < nStudents; i++){
+            studentList[i].print_Student();
+        }
+    }
+}
+--------------------------------------------------------------
+package enrollment;
+public class myProg {
+    public static void main(String[] args){
+        Course c = new Course();
+        Student s1 = new Student();
+        Student s2 = new Student();
+        c.set_Course("CNTT-001", "LAP TRINH HUONG DOI TUONG");
+        s1.set_Student("K2020-0001", "Nguyen Le");
+        s2.set_Student("K2020-0002", "Nguyen Ly");
+        s1.enroll_course(c);
+        s2.enroll_course(c);
+        c.print_Course();
+    }
+}
+
+--- Lesson 3, Homework:
+-- Library Management:
+- https://www.uml-diagrams.org/library-domain-uml-class-diagram-example.html
+-- Tank Gun:
+- https://docs.google.com/document/d/1dp_TZ3nsNQqAuXXkO6qPtswYDSynwBojBaQZvetQA8c/edit#heading=h.a6qt473nvgw9
+-- Library Management 2:
+- https://docs.google.com/document/d/1Dpl0C--gKQsD5rVcpOBrjeghGEv_xrEkME8IVGlFHr0/edit#heading=h.a6qt473nvgw9
+-- Library Management 1:
+- https://docs.google.com/document/d/1zDZwooeaAXCfgkSpjWU0JpCB3-dH7WZlkRqqu16_ujY/edit#heading=h.a6qt473nvgw9
+-- Library Management 1 in C:
+- https://docs.google.com/document/d/1zDZwooeaAXCfgkSpjWU0JpCB3-dH7WZlkRqqu16_ujY/edit#heading=h.a6qt473nvgw9
+
+--- Lesson 4:
+-- Homework do 6.2, 6.3, 6.4, 6.5
+- https://personal.ntu.edu.sg/ehchua/programming/java/J3f_OOPExercises.html
+-- Online Shopping Diagram:
+- https://www.uml-diagrams.org/examples/online-shopping-domain-uml-diagram-example.html?context=cls-examples
+-- Homework do 2.1 - 2.10
+- https://personal.ntu.edu.sg/ehchua/programming/java/J3f_OOPExercises.html
+-- Homework do 4.1 - 4.5
+- https://personal.ntu.edu.sg/ehchua/programming/java/J3f_OOPExercises.html#zz-4
+-- Homework do 3.1 - 3.7
+- https://personal.ntu.edu.sg/ehchua/programming/java/J3f_OOPExercises.html#zz-3
+-- Homework do 1.1 - 1.9
+- https://personal.ntu.edu.sg/ehchua/programming/java/J3f_OOPExercises.html
+
+--- Lesson 5:
+-- String + StringBuilder + StringBuffer
+- https://www.geeksforgeeks.org/string-class-in-java/
+- https://www.geeksforgeeks.org/java-lang-string-class-java-set-2/?ref=rp
+- https://www.geeksforgeeks.org/stringbuilder-class-in-java-with-examples/
+- https://www.geeksforgeeks.org/stringbuffer-class-in-java/
+-- Array Class:
+- https://www.geeksforgeeks.org/arrays-in-java/
+- https://www.geeksforgeeks.org/array-class-in-java/?ref=rp
+- Look into ArrayList and List, better than Array
+
+--- Lesson 6:
+-- Homework do 6.1 - 6.6
+- https://personal.ntu.edu.sg/ehchua/programming/java/J3f_OOPExercises.html
+-- Constructor:
+- https://www.geeksforgeeks.org/constructors-in-java/
+- https://www.geeksforgeeks.org/g-fact-50/?ref=rp
+- https://www.geeksforgeeks.org/copy-constructor-in-java/
+-- Class & Object:
+- https://www.geeksforgeeks.org/classes-objects-java/
+
+--- Lesson 7:
+-- Association, Aggregation and Composition:
+- https://www.geeksforgeeks.org/association-composition-aggregation-java/
+- https://www.dariawan.com/tutorials/java/association-aggregation-and-composition-in-java/
+
+--- Lesson 8:
+-- Inheritance & Constructor:
+- https://www.geeksforgeeks.org/inheritance-and-constructors-in-java/
+-- Inheritance
+- https://www.geeksforgeeks.org/inheritance-in-java/
+
+--- Lesson 9:
+-- Overriding methods
+- https://www.geeksforgeeks.org/overriding-methods-different-packages-java/?ref=rp
+-- Overriding
+- https://www.geeksforgeeks.org/overriding-in-java/?ref=rp
+
+--- Lesson 10:
+-- Static Class
+- https://www.geeksforgeeks.org/static-class-in-java/
+- https://www.youtube.com/playlist?list=PLu1AuqcHccUiCn99ZeQKr5asiehKlru8X
+-- Difference between static and non-static variables in Java
+- https://www.geeksforgeeks.org/difference-between-static-and-non-static-variables-in-java/?ref=rp
+-- "static" keyword
+- https://www.geeksforgeeks.org/static-keyword-java/
+
+--- Lesson 11:
+-- Difference between Abstract Class and Interface
+- https://www.geeksforgeeks.org/difference-between-abstract-class-and-interface-in-java/
+-- Interfaces and Inheritance
+- https://www.geeksforgeeks.org/interfaces-and-inheritance-in-java/
+-- Implement Interface using Abstract Class in Java
+- https://www.geeksforgeeks.org/implement-interface-using-abstract-class-in-java/
+-- Interface methods
+- https://www.geeksforgeeks.org/g-fact-47-java-interface-methods/
+-- Access modifiers/specifier of methods in interfaces
+- https://www.geeksforgeeks.org/g-fact-73/
+-- Inteface in Java
+- https://www.geeksforgeeks.org/interfaces-in-java/
+-- Why can’t static methods be abstract in Java?
+- https://www.geeksforgeeks.org/why-cant-static-methods-be-abstract-in-java/?ref=rp
+-- Abstract class vs. Concrete class
+- https://www.geeksforgeeks.org/difference-between-abstract-class-and-concrete-class-in-java/?ref=rp
+-- Abstract Class
+- https://www.geeksforgeeks.org/abstract-classes-in-java/
+-- Abstraction
+- https://www.geeksforgeeks.org/abstraction-in-java-2/
+
+--- Lesson 12: Interface but there aren't any data.
+
+--- Lesson 13:
+-- Nested interface
+- https://www.geeksforgeeks.org/interface-nested-class-another-interface/
+-- Nested Class
+- https://www.geeksforgeeks.org/nested-classes-java/
+- https://www.geeksforgeeks.org/static-class-in-java/
+- https://www.geeksforgeeks.org/inner-class-java/
+- https://www.geeksforgeeks.org/local-inner-class-java/
+- https://www.geeksforgeeks.org/anonymous-inner-class-java/
+
+--- Lesson 14:
+-- Flow control in try-catch-finally
+- https://beginnersbook.com/2013/04/try-catch-in-java/
+- https://www.geeksforgeeks.org/flow-control-in-try-catch-finally-in-java/
+-- Throw vs Throws
+- https://www.geeksforgeeks.org/throw-throws-java/
+-- Types of exception
+- https://www.geeksforgeeks.org/types-of-exception-in-java-with-examples/
+-- Try, catch, throw, throws
+- https://www.geeksforgeeks.org/try-catch-throw-and-throws-in-java/?ref=rp
+-- Checked & unchecked exceptions
+- https://javaconceptoftheday.com/checked-unchecked-exceptions-java/
+-- Error vs Exception
+- https://javaconceptoftheday.com/difference-between-error-vs-exception-in-java/
+
+--- Lesson 15:
+-- Iterable Interface
+- https://www.geeksforgeeks.org/iterable-interface-in-java/
+-- Stack
+- https://www.geeksforgeeks.org/stack-class-in-java/
+-- Queue
+- https://www.geeksforgeeks.org/queue-interface-java/
+-- LinkedList
+- https://www.geeksforgeeks.org/linked-list-in-java/
+-- ArrayList
+- https://www.geeksforgeeks.org/arraylist-in-java/
+-- Iterator
+- https://www.geeksforgeeks.org/how-to-use-iterator-in-java/
+-- Collections
+- https://www.javatpoint.com/collections-in-java
+
+--- Lesson 16:
+-- Generics
+- https://www.geeksforgeeks.org/generics-in-java/
+###########################################################################
+
+
+
+
+
+
