@@ -36,10 +36,7 @@ public class Rectangle {
 
     @Override
     public String toString() {
-        return "{" +
-                " length='" + getLength() + "'" +
-                ", width='" + getWidth() + "'" +
-                "}";
+        return "{" + " length='" + getLength() + "'" + ", width='" + getWidth() + "'" + "}";
     }
 
     public double getArea() {

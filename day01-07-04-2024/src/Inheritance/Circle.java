@@ -2,7 +2,7 @@
 /* Declare inside a folder need to have package.
  * If you have functions and want to import them from other folders, use import <package-name>.
  */
-package Encapsulation;
+package Inheritance;
 
 public class Circle {
     /* This is how you declare a constant by using final and static */
@@ -16,10 +16,6 @@ public class Circle {
      * https://www.geeksforgeeks.org/static-keyword-java/ is instead of creating an
      * instance everytime being initiated, it is a class level variable, there is
      * only 1 instance no matter how many time it's initialized.
-     * 
-     * https://www.educative.io/answers/how-to-declare-constants-in-java
-     * https://www.w3schools.com/java/ref_keyword_final.asp
-     * 
      */
     public final static double PI = Math.PI;
     /*
@@ -62,9 +58,7 @@ public class Circle {
 
     @Override
     public String toString() {
-        return "{" +
-                " radius='" + getRadius() + "'" +
-                "}";
+        return "{" + " radius='" + getRadius() + "'" + "}";
     }
 
     /*

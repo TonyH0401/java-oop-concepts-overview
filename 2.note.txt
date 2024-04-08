@@ -1,16 +1,14 @@
-https://www.studysmarter.co.uk/explanations/computer-science/computer-programming/java-polymorphism/#:~:text=Java%20incorporates%20compile%2Dtime%20(static,the%20dog%20and%20cat%20classes.
-https://www.geeksforgeeks.org/super-keyword/
+- https://www.studysmarter.co.uk/explanations/computer-science/computer-programming/java-polymorphism/#:~:text=Java%20incorporates%20compile%2Dtime%20(static,the%20dog%20and%20cat%20classes.
 
-https://www.educative.io/answers/how-to-declare-constants-in-java
-https://www.w3schools.com/java/ref_keyword_final.asp
+- composition vs agregation vs association
 
-composition
-agregation
-association
+- static vs non-static
 
-nested class
+- nested class
 
 generics
 - comparable + comparator, make your own
 
 collections
+
+Java enums aka list of constant values
