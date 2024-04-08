@@ -3,6 +3,8 @@
 - composition vs agregation vs association
 
 - static vs non-static
+	- non-static can call non-static + static
+	- static can only call static
 
 - nested class
 

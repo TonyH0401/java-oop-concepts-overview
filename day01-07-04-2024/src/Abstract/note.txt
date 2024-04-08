@@ -1,0 +1,4 @@
+abstract class is a class, 1/2 abstraction
+    use on class that has several common method
+interface is not a class, full abstraction
+    use on class that has alot of common function
