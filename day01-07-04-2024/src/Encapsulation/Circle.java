@@ -63,10 +63,24 @@ public class Circle {
                 "}";
     }
 
-    public int compareTo(Object obj) {
+    /*
+     * "throws" keyword is an indicator that the function will and may throw an
+     * Exception, I remembered that you can place this outside/on the class level
+     * but it seemingly that was wrong.
+     * 
+     * This is the list of "all" Exception:
+     * https://www.geeksforgeeks.org/types-of-exception-in-java-with-examples/.
+     * 
+     * And seemingly, you can "throws" multiple Exceptions.
+     */
+    public int compareTo(Object obj) throws Exception, IllegalArgumentException {
         if (!(obj instanceof Circle)) {
-            System.out.println("> Object is not correct for comparision!");
-            return -1;
+            /*
+             * "throw" keyword means you are actually making the action of throwing an
+             * Exception out there, you are not indicating anymore, you are actively
+             * throwing an Exception.
+             */
+            throw new IllegalArgumentException("Cannot Compare! Not Circle Object Class!");
         }
         Circle circle = (Circle) obj;
         if (getArea() < circle.getArea()) {

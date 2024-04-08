@@ -9,3 +9,8 @@ agregation
 association
 
 nested class
+
+generics
+- comparable + comparator, make your own
+
+collections
