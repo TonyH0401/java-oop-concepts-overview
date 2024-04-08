@@ -1,0 +1,3 @@
+Static can be applied to variables, functions,...
+Non-Static can call both non-static and static
+Static can only call static

@@ -2,15 +2,7 @@
 
 - composition vs agregation vs association
 
-- static vs non-static
-	- non-static can call non-static + static
-	- static can only call static
-
 - nested class
 
-generics
+generics:
 - comparable + comparator, make your own
-
-collections
-
-Java enums aka list of constant values
